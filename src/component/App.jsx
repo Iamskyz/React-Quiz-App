@@ -94,14 +94,25 @@ export default function App() {
     localStorage.setItem("highscore", highscore);
   }, [highscore]);
 
-  // Fetch questions from local JSON file (public/questions.json)
+  // // Fetch questions from local JSON file (public/questions.json)
+  // useEffect(() => {
+  //   fetch("/questions.json")
+  //     .then((res) => res.json())
+  //     .then((data) => dispatch({ type: "dataReceived", payload: data }))
+  //     .catch(() => dispatch({ type: "dataFailed" }));
+  // },[]);
+
+  // Fetch questions from /public/questions.json on Vercel
   useEffect(() => {
     fetch("/questions.json")
       .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch(() => dispatch({ type: "dataFailed" }));
-  },[]);
-
+      .then((data) =>
+        // questions.json has shape: { "questions": [ ... ] }
+        dispatch({ type: "dataReceived", payload: data.questions })
+        )
+        .catch(() => dispatch({ type: "dataFailed" }));
+  }, []);
+    
   return (
     <div className="app">
       <Header />
