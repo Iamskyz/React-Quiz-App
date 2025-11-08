@@ -96,7 +96,7 @@ export default function App() {
 
   // Fetch questions from local JSON file (public/questions.json)
   useEffect(() => {
-    fetch("http://localhost:8000/questions")
+    fetch("/questions.json")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReceived", payload: data }))
       .catch(() => dispatch({ type: "dataFailed" }));
